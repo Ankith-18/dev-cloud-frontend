@@ -1,16 +1,17 @@
 "use client"
 
 import { Button } from "@/components/ui/Button"
-import { PlusIcon, MagnifyingGlassIcon, FunnelIcon } from '@heroicons/react/24/outline'
+import { PlusIcon, MagnifyingGlassIcon, FunnelIcon, LockClosedIcon, GlobeAltIcon } from '@heroicons/react/24/outline'
 import { useState } from "react"
 import { CreateProjectModal } from "@/components/projects/CreateProjectModal"
 
+
 // This will be replaced with real data from your friend's API
 const mockProjects = [
-  { id: 1, name: 'backend-api', environments: 3, createdAt: '2024-01-15', status: 'active' },
-  { id: 2, name: 'frontend-app', environments: 2, createdAt: '2024-01-20', status: 'active' },
-  { id: 3, name: 'auth-service', environments: 3, createdAt: '2024-02-01', status: 'inactive' },
-  { id: 4, name: 'payment-processor', environments: 2, createdAt: '2024-02-10', status: 'active' },
+  { id: 1, name: 'backend-api', environments: 3, createdAt: '2024-01-15', status: 'active', visibility: 'private' },
+  { id: 2, name: 'frontend-app', environments: 2, createdAt: '2024-01-20', status: 'active', visibility: 'private' },
+  { id: 3, name: 'auth-service', environments: 3, createdAt: '2024-02-01', status: 'inactive', visibility: 'public' },
+  { id: 4, name: 'payment-processor', environments: 2, createdAt: '2024-02-10', status: 'active', visibility: 'private' },
 ]
 
 export default function ProjectsPage() {
@@ -22,11 +23,18 @@ export default function ProjectsPage() {
     project.name.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
-  const handleCreateProject = (projectName: string, environment: string) => {
+  const handleCreateProject = (projectData: {
+    name: string
+    description: string
+    visibility: 'public' | 'private'
+    defaultEnvironment: string
+  }) => {
     // This will be replaced with actual API call
     const newProject = {
       id: projects.length + 1,
-      name: projectName,
+      name: projectData.name,
+      description: projectData.description,
+      visibility: projectData.visibility,
       environments: 1,
       createdAt: new Date().toISOString().split('T')[0],
       status: 'active' as const
@@ -78,6 +86,9 @@ export default function ProjectsPage() {
                   Project Name
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  Visibility
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   Environments
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
@@ -100,6 +111,18 @@ export default function ProjectsPage() {
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="flex items-center gap-1">
+                      {project.visibility === 'private' ? (
+                        <LockClosedIcon className="h-4 w-4 text-gray-400" />
+                      ) : (
+                        <GlobeAltIcon className="h-4 w-4 text-gray-400" />
+                      )}
+                      <span className="text-sm text-gray-500 dark:text-gray-400 capitalize">
+                        {project.visibility}
+                      </span>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm text-gray-500 dark:text-gray-400">
                       {project.environments} {project.environments === 1 ? 'environment' : 'environments'}
                     </div>
@@ -119,8 +142,14 @@ export default function ProjectsPage() {
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <Button variant="ghost" size="sm" className="mr-2 hover:bg-blue-50 dark:hover:bg-blue-900">
-                      View
+
+                    <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        className="mr-2 hover:bg-blue-50 dark:hover:bg-blue-900"
+                        onClick={() => window.location.href = `/projects/${project.id}`}
+                        >
+                        View
                     </Button>
                     <Button variant="ghost" size="sm" className="text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900">
                       Delete
