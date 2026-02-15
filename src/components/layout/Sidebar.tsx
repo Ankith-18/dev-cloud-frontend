@@ -10,13 +10,14 @@ import {
   Cog6ToothIcon
 } from '@heroicons/react/24/outline'
 
+
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: HomeIcon },
   { name: 'Projects', href: '/projects', icon: CubeIcon },
   { name: 'Pipelines', href: '/pipelines', icon: RocketLaunchIcon },
   { name: 'Deployments', href: '/deployments', icon: CommandLineIcon },
   { name: 'Logs', href: '/logs', icon: DocumentTextIcon },
-  { name: 'Secrets', href: '/secrets', icon: KeyIcon },
+  { name: 'Secrets', href: '/secrets', icon: KeyIcon }, // Add this
   { name: 'Feature Flags', href: '/flags', icon: FlagIcon },
   { name: 'Settings', href: '/settings', icon: Cog6ToothIcon },
 ]

@@ -52,3 +52,14 @@ export interface Deployment {
   createdAt: string
   completedAt?: string
 }
+
+export interface Secret {
+  id: string
+  key: string
+  value: string
+  environment: string
+  projectId: number
+  projectName: string
+  createdAt: string
+  lastUpdated?: string
+}
