@@ -1,6 +1,5 @@
 "use client"
 
-import { Fragment } from 'react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 
 interface ModalProps {
