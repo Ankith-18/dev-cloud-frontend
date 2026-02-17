@@ -19,7 +19,7 @@ const navigation = [
   { name: 'Logs', href: '/logs', icon: DocumentTextIcon },
   { name: 'Secrets', href: '/secrets', icon: KeyIcon },
   { name: 'Feature Flags', href: '/flags', icon: FlagIcon },
-  { name: 'Settings', href: '/settings', icon: Cog6ToothIcon }, // Make sure this exists
+  { name: 'Settings', href: '/settings', icon: Cog6ToothIcon },
 ]
 
 export function Sidebar() {
