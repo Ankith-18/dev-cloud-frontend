@@ -17,9 +17,9 @@ const navigation = [
   { name: 'Pipelines', href: '/pipelines', icon: RocketLaunchIcon },
   { name: 'Deployments', href: '/deployments', icon: CommandLineIcon },
   { name: 'Logs', href: '/logs', icon: DocumentTextIcon },
-  { name: 'Secrets', href: '/secrets', icon: KeyIcon }, // Add this
+  { name: 'Secrets', href: '/secrets', icon: KeyIcon },
   { name: 'Feature Flags', href: '/flags', icon: FlagIcon },
-  { name: 'Settings', href: '/settings', icon: Cog6ToothIcon },
+  { name: 'Settings', href: '/settings', icon: Cog6ToothIcon }, // Make sure this exists
 ]
 
 export function Sidebar() {
