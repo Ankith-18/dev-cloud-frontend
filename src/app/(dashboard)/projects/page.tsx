@@ -1,45 +1,73 @@
 "use client"
 
+import { useState, useEffect } from 'react'
 import { Button } from "@/components/ui/Button"
-import { PlusIcon, MagnifyingGlassIcon, FunnelIcon, LockClosedIcon, GlobeAltIcon } from '@heroicons/react/24/outline'
-import { useState } from "react"
+import { PlusIcon, MagnifyingGlassIcon, FunnelIcon } from '@heroicons/react/24/outline'
 import { CreateProjectModal } from "@/components/projects/CreateProjectModal"
-
-
-// This will be replaced with real data from your friend's API
-const mockProjects = [
-  { id: 1, name: 'backend-api', environments: 3, createdAt: '2024-01-15', status: 'active', visibility: 'private' },
-  { id: 2, name: 'frontend-app', environments: 2, createdAt: '2024-01-20', status: 'active', visibility: 'private' },
-  { id: 3, name: 'auth-service', environments: 3, createdAt: '2024-02-01', status: 'inactive', visibility: 'public' },
-  { id: 4, name: 'payment-processor', environments: 2, createdAt: '2024-02-10', status: 'active', visibility: 'private' },
-]
+import { projectsService, type Project } from '@/services'
 
 export default function ProjectsPage() {
   const [searchTerm, setSearchTerm] = useState("")
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [projects, setProjects] = useState(mockProjects)
+  const [projects, setProjects] = useState<Project[]>([])
+  const [isLoading, setIsLoading] = useState(true)
 
+  // Load projects when page opens
+  useEffect(() => {
+    loadProjects()
+  }, [])
+
+  // Function to fetch projects from backend
+  const loadProjects = async () => {
+    try {
+      setIsLoading(true)
+      const data = await projectsService.getAll()
+      setProjects(data)
+    } catch (error) {
+      console.error('Failed to load projects:', error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  // Function to handle creating a new project
+  const handleCreateProject = async (projectData: any) => {
+    try {
+      const newProject = await projectsService.create(projectData)
+      setProjects([newProject, ...projects])
+      setIsModalOpen(false)
+    } catch (error) {
+      console.error('Failed to create project:', error)
+    }
+  }
+
+  // Function to handle deleting a project
+  const handleDeleteProject = async (id: number) => {
+    if (confirm('Are you sure you want to delete this project?')) {
+      try {
+        await projectsService.delete(id)
+        setProjects(projects.filter(p => p.id !== id))
+      } catch (error) {
+        console.error('Failed to delete project:', error)
+      }
+    }
+  }
+
+  // Filter projects based on search
   const filteredProjects = projects.filter(project =>
     project.name.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
-  const handleCreateProject = (projectData: {
-    name: string
-    description: string
-    visibility: 'public' | 'private'
-    defaultEnvironment: string
-  }) => {
-    // This will be replaced with actual API call
-    const newProject = {
-      id: projects.length + 1,
-      name: projectData.name,
-      description: projectData.description,
-      visibility: projectData.visibility,
-      environments: 1,
-      createdAt: new Date().toISOString().split('T')[0],
-      status: 'active' as const
-    }
-    setProjects([newProject, ...projects])
+  // Show loading state
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+          <p className="text-gray-500 dark:text-gray-400">Loading projects...</p>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -86,9 +114,6 @@ export default function ProjectsPage() {
                   Project Name
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                  Visibility
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   Environments
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
@@ -111,20 +136,8 @@ export default function ProjectsPage() {
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center gap-1">
-                      {project.visibility === 'private' ? (
-                        <LockClosedIcon className="h-4 w-4 text-gray-400" />
-                      ) : (
-                        <GlobeAltIcon className="h-4 w-4 text-gray-400" />
-                      )}
-                      <span className="text-sm text-gray-500 dark:text-gray-400 capitalize">
-                        {project.visibility}
-                      </span>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm text-gray-500 dark:text-gray-400">
-                      {project.environments} {project.environments === 1 ? 'environment' : 'environments'}
+                      {project.environments?.length || 0} {project.environments?.length === 1 ? 'environment' : 'environments'}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
@@ -138,20 +151,24 @@ export default function ProjectsPage() {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm text-gray-500 dark:text-gray-400">
-                      {project.createdAt}
+                      {new Date(project.createdAt).toLocaleDateString()}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-
                     <Button 
-                        variant="ghost" 
-                        size="sm" 
-                        className="mr-2 hover:bg-blue-50 dark:hover:bg-blue-900"
-                        onClick={() => window.location.href = `/projects/${project.id}`}
-                        >
-                        View
+                      variant="ghost" 
+                      size="sm" 
+                      className="mr-2 hover:bg-blue-50 dark:hover:bg-blue-900"
+                      onClick={() => window.location.href = `/projects/${project.id}`}
+                    >
+                      View
                     </Button>
-                    <Button variant="ghost" size="sm" className="text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900">
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      className="text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900"
+                      onClick={() => handleDeleteProject(project.id)}
+                    >
                       Delete
                     </Button>
                   </td>
