@@ -1,5 +1,7 @@
 "use client"
 
+import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/Button"
 import { 
@@ -85,6 +87,7 @@ const tabs = [
 ]
 
 export default function ProjectDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const router = useRouter()
   const [activeTab, setActiveTab] = useState('overview')
   const [project, setProject] = useState<Project | null>(null)
   const [isLoading, setIsLoading] = useState(true)
@@ -149,6 +152,14 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ id: st
     }
   }
 
+  const handleViewAllPipelines = () => {
+    router.push('/pipelines')
+  }
+
+  const handleViewPipeline = (id: number) => {
+    router.push(`/pipelines/${id}`)
+  }
+
   // Loading state
   if (isLoading) {
     return (
@@ -168,7 +179,7 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ id: st
         <div className="text-center">
           <ExclamationTriangleIcon className="h-8 w-8 text-red-500 mx-auto mb-4" />
           <p className="text-gray-500 dark:text-gray-400 mb-4">{error || 'Project not found'}</p>
-          <Button variant="outline" onClick={() => window.history.back()}>
+          <Button variant="outline" onClick={() => router.back()}>
             Go Back
           </Button>
         </div>
@@ -180,7 +191,7 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ id: st
     <div className="space-y-6">
       {/* Back button and title */}
       <div className="flex items-center gap-4">
-        <Button variant="ghost" size="sm" onClick={() => window.history.back()}>
+        <Button variant="ghost" size="sm" onClick={() => router.back()}>
           <ArrowLeftIcon className="h-4 w-4 mr-1" />
           Back
         </Button>
@@ -346,7 +357,7 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ id: st
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                 Pipelines
               </h3>
-              <Button onClick={() => window.location.href = '/pipelines'}>
+              <Button onClick={handleViewAllPipelines}>
                 <PlusIcon className="h-4 w-4 mr-2" />
                 View All Pipelines
               </Button>
@@ -362,7 +373,7 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ id: st
                     <Button 
                       variant="outline" 
                       size="sm"
-                      onClick={() => window.location.href = `/pipelines/${i}`}
+                      onClick={() => handleViewPipeline(i)}
                     >
                       View
                     </Button>

@@ -1,3 +1,6 @@
+"use client"
+
+import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/Button'
 import { 
   PlayIcon, 
@@ -11,10 +14,11 @@ import type { Pipeline } from '@/types'
 interface PipelineCardProps {
   pipeline: Pipeline
   onRun: () => void
-  onViewDetails: () => void
 }
 
-export function PipelineCard({ pipeline, onRun, onViewDetails }: PipelineCardProps) {
+export function PipelineCard({ pipeline, onRun }: PipelineCardProps) {
+  const router = useRouter()
+
   const getStatusIcon = () => {
     switch (pipeline.status) {
       case 'success':
@@ -39,6 +43,10 @@ export function PipelineCard({ pipeline, onRun, onViewDetails }: PipelineCardPro
       default:
         return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300'
     }
+  }
+
+  const handleViewDetails = () => {
+    router.push(`/pipelines/${pipeline.id}`)
   }
 
   return (
@@ -82,7 +90,7 @@ export function PipelineCard({ pipeline, onRun, onViewDetails }: PipelineCardPro
           <Button 
             variant="outline" 
             size="sm"
-            onClick={onViewDetails}
+            onClick={handleViewDetails}
           >
             View Details
           </Button>

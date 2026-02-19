@@ -1,12 +1,15 @@
 "use client"
 
 import { useState, useEffect } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { Button } from "@/components/ui/Button"
 import { PlusIcon, MagnifyingGlassIcon, FunnelIcon } from '@heroicons/react/24/outline'
 import { CreateProjectModal } from "@/components/projects/CreateProjectModal"
 import { projectsService, type Project } from '@/services'
 
 export default function ProjectsPage() {
+  const router = useRouter()
   const [searchTerm, setSearchTerm] = useState("")
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [projects, setProjects] = useState<Project[]>([])
@@ -51,6 +54,11 @@ export default function ProjectsPage() {
         console.error('Failed to delete project:', error)
       }
     }
+  }
+
+  // Function to handle view project
+  const handleViewProject = (id: number) => {
+    router.push(`/projects/${id}`)
   }
 
   // Filter projects based on search
@@ -159,7 +167,7 @@ export default function ProjectsPage() {
                       variant="ghost" 
                       size="sm" 
                       className="mr-2 hover:bg-blue-50 dark:hover:bg-blue-900"
-                      onClick={() => window.location.href = `/projects/${project.id}`}
+                      onClick={() => handleViewProject(project.id)}
                     >
                       View
                     </Button>

@@ -1,5 +1,6 @@
 "use client"
 
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import { 
@@ -11,7 +12,8 @@ import {
   GlobeAltIcon,
   ArrowTopRightOnSquareIcon,
   FunnelIcon,
-  XMarkIcon
+  XMarkIcon,
+  DocumentTextIcon
 } from '@heroicons/react/24/outline'
 
 // Mock data
@@ -56,6 +58,7 @@ const mockDeployments = [
     environment: 'dev',
     status: 'pending',
     version: 'v0.9.0',
+    url: 'https://auth.example.com',
     deployedAt: '2024-02-15T12:00:00Z',
     deployedBy: 'Mike Johnson'
   },
@@ -73,6 +76,7 @@ const mockDeployments = [
 ]
 
 export default function DeploymentsPage() {
+  const router = useRouter()
   const [statusFilter, setStatusFilter] = useState('all')
   const [environmentFilter, setEnvironmentFilter] = useState('all')
   const [showFilters, setShowFilters] = useState(false)
@@ -101,6 +105,15 @@ export default function DeploymentsPage() {
       default:
         return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300'
     }
+  }
+
+  const handleRedeploy = (deploymentId: string) => {
+    alert(`Redeploying deployment ${deploymentId}`)
+    // In real app: router.push(`/deployments/${deploymentId}/redeploy`)
+  }
+
+  const handleViewLogs = (deploymentId: string) => {
+    router.push(`/logs?deployment=${deploymentId}`)
   }
 
   // Get unique environments for filter
@@ -309,11 +322,20 @@ export default function DeploymentsPage() {
               </div>
 
               <div className="flex items-center gap-2 ml-4">
-                <Button variant="outline" size="sm">
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => handleRedeploy(deployment.id)}
+                >
                   <RocketLaunchIcon className="h-4 w-4 mr-1" />
                   Redeploy
                 </Button>
-                <Button variant="ghost" size="sm">
+                <Button 
+                  variant="ghost" 
+                  size="sm"
+                  onClick={() => handleViewLogs(deployment.id)}
+                >
+                  <DocumentTextIcon className="h-4 w-4 mr-1" />
                   View Logs
                 </Button>
               </div>

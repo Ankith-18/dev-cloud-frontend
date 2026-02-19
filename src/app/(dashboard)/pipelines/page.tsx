@@ -153,11 +153,10 @@ export default function PipelinesPage() {
       <div className="space-y-3">
         {filteredPipelines.map((pipeline) => (
           <PipelineCard
-            key={pipeline.id}
-            pipeline={pipeline}
-            onRun={() => alert(`Running pipeline: ${pipeline.name}`)}
-            onViewDetails={() => window.location.href = `/pipelines/${pipeline.id}`}
-          />
+          key={pipeline.id}
+          pipeline={pipeline}
+          onRun={() => alert(`Running pipeline: ${pipeline.name}`)}
+        />
         ))}
 
         {filteredPipelines.length === 0 && (

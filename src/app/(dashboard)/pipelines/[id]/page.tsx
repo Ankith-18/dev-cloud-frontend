@@ -1,5 +1,6 @@
 "use client"
 
+import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/Button'
 import { 
@@ -48,6 +49,7 @@ const mockPipeline = {
 }
 
 export default function PipelineDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const router = useRouter()
   const [selectedStep, setSelectedStep] = useState(1)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -97,6 +99,15 @@ export default function PipelineDetailPage({ params }: { params: Promise<{ id: s
     }
   }
 
+  const handleBack = () => {
+    router.back()
+  }
+
+  const handleRunAgain = () => {
+    // Simulate running pipeline again
+    alert('Pipeline triggered successfully!')
+  }
+
   // Loading state
   if (isLoading) {
     return (
@@ -116,7 +127,7 @@ export default function PipelineDetailPage({ params }: { params: Promise<{ id: s
         <div className="text-center">
           <ExclamationTriangleIcon className="h-8 w-8 text-red-500 mx-auto mb-4" />
           <p className="text-gray-500 dark:text-gray-400 mb-4">{error || 'Pipeline not found'}</p>
-          <Button variant="outline" onClick={() => window.history.back()}>
+          <Button variant="outline" onClick={handleBack}>
             Go Back
           </Button>
         </div>
@@ -124,12 +135,11 @@ export default function PipelineDetailPage({ params }: { params: Promise<{ id: s
     )
   }
 
-  // Rest of your component remains the same...
   return (
     <div className="space-y-6">
       {/* Header with back button */}
       <div className="flex items-center gap-4">
-        <Button variant="ghost" size="sm" onClick={() => window.history.back()}>
+        <Button variant="ghost" size="sm" onClick={handleBack}>
           <ArrowLeftIcon className="h-4 w-4 mr-1" />
           Back to Pipelines
         </Button>
@@ -158,7 +168,7 @@ export default function PipelineDetailPage({ params }: { params: Promise<{ id: s
             }`}>
               {pipeline.status}
             </span>
-            <Button>
+            <Button onClick={handleRunAgain}>
               <PlayIcon className="h-4 w-4 mr-2" />
               Run Again
             </Button>
