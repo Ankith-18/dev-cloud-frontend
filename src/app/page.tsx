@@ -1,5 +1,4 @@
 "use client"
-
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { motion, useScroll, useTransform, useSpring, useInView } from 'framer-motion'
@@ -240,7 +239,7 @@ export default function LandingPage() {
             </button>
           </div>
 
-          {/* 3D Dashboard Preview */}
+          3D Dashboard Preview
           <div className="mt-20 relative">
             <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-3xl blur-3xl opacity-30" />
             <div className="relative bg-gray-900 rounded-3xl shadow-2xl overflow-hidden border border-gray-800">
@@ -519,3 +518,4 @@ export default function LandingPage() {
     </div>
   )
 }
+
