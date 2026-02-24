@@ -33,18 +33,21 @@ TypeScript - Type-safe development
 Tailwind CSS - Utility-first styling
 Framer Motion - Smooth animations and transitions
 
-UI Components
+-UI Components
 Heroicons - Beautiful SVG icons
 React Icons - Social media and brand icons
 Custom Components - 25+ reusable UI components
 
-State & Data
+-State & Data
 React Hooks - Local state management
 Axios - HTTP client for API integration
 Service Layer - Modular API service architecture
 
-Development Tools
+-Development Tools
 ESLint - Code linting
 Prettier - Code formatting
 Git - Version control
+
+<img width="865" height="506" alt="image" src="https://github.com/user-attachments/assets/dbbf55ab-1349-4347-a631-0934547aa297" />
+
 
