@@ -48,38 +48,3 @@ ESLint - Code linting
 Prettier - Code formatting
 Git - Version control
 
-devcloud/
-├── src/
-│   ├── app/                    # Next.js App Router pages
-│   │   ├── (auth)/             # Authentication routes
-│   │   │   ├── login/           # Login page
-│   │   │   ├── signup/          # Signup page
-│   │   │   ├── forgot-password/ # Password reset request
-│   │   │   ├── verify-otp/      # OTP verification
-│   │   │   └── reset-password/  # New password setup
-│   │   ├── (dashboard)/         # Protected dashboard routes
-│   │   │   ├── dashboard/        # Main dashboard
-│   │   │   ├── projects/         # Project management
-│   │   │   ├── pipelines/        # CI/CD pipelines
-│   │   │   ├── deployments/      # Deployment tracking
-│   │   │   ├── logs/             # Log viewer
-│   │   │   ├── secrets/          # Secrets management
-│   │   │   ├── flags/            # Feature flags
-│   │   │   └── settings/         # User settings
-│   │   └── page.tsx              # Landing page
-│   ├── components/               # Reusable components
-│   │   ├── ui/                   # Basic UI components
-│   │   ├── layout/               # Layout components
-│   │   ├── projects/             # Project-specific components
-│   │   ├── pipelines/            # Pipeline-specific components
-│   │   └── environments/         # Environment components
-│   ├── services/                 # API service layer
-│   │   ├── api.ts                 # Axios configuration
-│   │   ├── auth.service.ts        # Authentication APIs
-│   │   ├── projects.service.ts    # Project management APIs
-│   │   ├── pipelines.service.ts   # Pipeline APIs
-│   │   └── ...                    # Other service files
-│   └── lib/                       # Utilities and helpers
-├── public/                        # Static assets
-├── API-CONTRACT.md                # Backend API documentation
-└── package.json                   # Dependencies
