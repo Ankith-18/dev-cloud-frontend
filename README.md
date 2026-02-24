@@ -49,5 +49,80 @@ Prettier - Code formatting
 Git - Version control
 
 <img width="865" height="506" alt="image" src="https://github.com/user-attachments/assets/dbbf55ab-1349-4347-a631-0934547aa297" />
+<img width="859" height="491" alt="image" src="https://github.com/user-attachments/assets/a58642fa-e20a-48ca-af78-5379b26d8f64" />
+
+git clone https://github.com/yourusername/devcloud.git
+cd devcloud
+npm install
+cp .env.example .env.local
+# Backend API URL (update when backend is ready)
+NEXT_PUBLIC_API_URL=http://localhost:8080/api/v1
+
+# OAuth credentials (optional for now)
+NEXT_PUBLIC_GITHUB_CLIENT_ID=your_github_client_id
+NEXT_PUBLIC_GOOGLE_CLIENT_ID=your_google_client_id
+
+npm run dev
+http://localhost:3000
+
+**🎯 Key Pages & Features
+Landing Page (/)
+3D animated hero section with parallax effects
+Floating stars background
+AI chat assistant for instant help
+Feature showcase with hover effects**
+
+-Authentication Flow
+Login (/login) - Email/password and social login
+Signup (/signup) - Account creation
+Forgot Password - Email verification with OTP
+Reset Password - Secure password reset
+
+-Dashboard (/dashboard)
+Overview stats (projects, deployments, pipelines)
+Recent activity feed
+System notifications
+
+-Projects (/projects)
+Grid/table view toggle
+Project cards with metadata
+Environment management
+
+-Quick actions (view, delete)
+Pipelines (/pipelines)
+Status filters (running, success, failed, pending)
+Step-by-step execution view
+Real-time logs per step
+Pipeline retry functionality
+
+-Deployments (/deployments)
+Environment-based filtering
+Deployment status tracking
+Version information
+Quick rollback ready
+
+-Logs (/logs)
+Real-time log streaming
+Filter by service/environment/level
+Search functionality
+Auto-refresh toggle
+
+-Secrets (/secrets)
+Encrypted secret storage
+Environment-specific secrets
+Show/hide functionality
+Copy to clipboard
+
+-Feature Flags (/flags)
+Toggle flags on/off
+Environment-based targeting
+Create new flags
+Audit logging ready
+
+-Settings (/settings)
+Profile management
+API keys
+Session management
+Notification preferences
 
 
