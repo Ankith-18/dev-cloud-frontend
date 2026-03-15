@@ -5,6 +5,7 @@ DevCloud is a comprehensive, enterprise-grade developer platform that enables te
 https://via.placeholder.com/1200x600/1a1a2e/ffffff?text=DevCloud+Platform
 
 ✨ Key Features
+
 🎯 Core Functionality
 Project Management - Create and manage multiple projects with isolated environments
 CI/CD Pipelines - Automated build, test, and deployment pipelines with step-by-step execution
