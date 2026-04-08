@@ -12,6 +12,7 @@ interface AddFlagModalProps {
   projects: { id: number; name: string }[]
 }
 
+
 export function AddFlagModal({ isOpen, onClose, onAdd, projects }: AddFlagModalProps) {
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
